@@ -42,10 +42,6 @@ def find_index_post(id):
 def root():
     return {"message": "i will start the backend now"}
 
-@app.get('/sqlalchemy')
-def test_posts(db:Session = Depends(get_db)):
-    posts =  db.query(models.Post).all()
-    return {'data':posts}
 
 @app.get("/posts")
 def posts(db:Session = Depends(get_db)):
@@ -58,7 +54,7 @@ def posts(db:Session = Depends(get_db)):
 
 
 @app.post('/posts',status_code=status.HTTP_201_CREATED)
-def create_posts(post:schemas.Post, db:Session = Depends(get_db)):
+def create_posts(post:schemas.PostCreate, db:Session = Depends(get_db)):
     # cursor.execute(""" INSERT INTO post (title,content,published) VALUES (%s,%s,%s) RETURNING *""",
     #                (post.title,post.content,post.published))
     # new_post = cursor.fetchone()
@@ -103,7 +99,7 @@ def delete_post(id:int,db:Session = Depends(get_db)):
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 @app.put('/posts/{id}')
-def update_post(id:int,updated_post:schemas.Post,db:Session = Depends(get_db)):
+def update_post(id:int,updated_post:schemas.PostCreate,db:Session = Depends(get_db)):
     # cursor.execute("""UPDATE post SET title=%s,content=%s,published=%s WHERE id = %sRETURNING *""",
     # (post.title,post.content,post.published,str(id)))
     # update_post=cursor.fetchone()
