@@ -1,0 +1,33 @@
+to start virtual env 
+venv\Scripts\activate.bat
+
+
+CRUD operations
+create -> post method  eg:@app.post('/post)
+read -> get  eg:@app.get('/posts/{id}') -> to get info about specific post
+     -> get eg:@app.get('/post)
+update -> put or patch   eg: @app.put('/post/{id})   
+        for put we have  to send all data again, but in case of patch only the changes are sent
+delete -> delete    eg:@app.delete("/post/{id}") 
+
+
+In fastapi the order of the routes that you have decalared matters it finds the first match and returns it 
+
+as i move the main.py file to app folder to start the server  uvicorn app.main:app --reload
+
+*****ORM's PART*****
+
+Sqlalchemy dooes not know how to talk with python so we need database driver so right now fo postgres we are usinfg
+psycopyg2 that's how orms work
+engine is responsible for connection of postgresql and Sqlalchemy
+
+def get_db():  This will get database connection and it will give a session
+
+pydantic models what they do is we have create a schema for that like this 
+class Post(BaseModel):
+    title:str
+    content:str
+    published:bool=True
+so what they do is checks whether the user inputs the correct field in it so and then they send back to it 
+
+In Sqlalchemy model we update create all the operationsare done in python alone so that we don;t worry about the sql queries
