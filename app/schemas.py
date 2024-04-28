@@ -29,3 +29,7 @@ class UserOut(BaseModel):  #it gives you sqlAlchmey model but we have to change 
     class Config:
         orm_mode=True   
         
+        
+class UserLogin(BaseModel):
+    email:EmailStr
+    password:str
