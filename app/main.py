@@ -1,7 +1,7 @@
 from fastapi import FastAPI,Response,status,HTTPException,Depends
 from fastapi.params import Body
 import time
-from typing import Optional
+from typing import Optional,List
 from sqlalchemy.orm  import Session
 from random import randrange
 import psycopg2
@@ -43,17 +43,17 @@ def root():
     return {"message": "i will start the backend now"}
 
 
-@app.get("/posts")
+@app.get("/posts", response_model=List[schemas.Post])
 def posts(db:Session = Depends(get_db)):
     # cursor.execute("""SELECT * FROM post """)
     # posts = cursor.fetchall() this is with using raw sql
  
     posts =  db.query(models.Post).all() 
-    return {"data":posts}
+    return posts
 
 
 
-@app.post('/posts',status_code=status.HTTP_201_CREATED)
+@app.post('/posts',status_code=status.HTTP_201_CREATED,response_model=schemas.Post)
 def create_posts(post:schemas.PostCreate, db:Session = Depends(get_db)):
     # cursor.execute(""" INSERT INTO post (title,content,published) VALUES (%s,%s,%s) RETURNING *""",
     #                (post.title,post.content,post.published))
@@ -63,11 +63,11 @@ def create_posts(post:schemas.PostCreate, db:Session = Depends(get_db)):
     db.add(new_post)
     db.commit()
     db.refresh(new_post)  # this is doing the returning work that is been done in above query
-    return {"data":new_post }
+    return new_post 
 
 
 
-@app.get('/posts/{id}')
+@app.get('/posts/{id}',response_model=schemas.Post)
 def  get_post(id:int,db:Session = Depends(get_db)):
     # cursor.execute("""SELECT * FROM post WHERE  id=%s""",str(id))
     # post = cursor.fetchone()
@@ -98,7 +98,7 @@ def delete_post(id:int,db:Session = Depends(get_db)):
     db.commit()
     return Response(status_code=status.HTTP_204_NO_CONTENT)
 
-@app.put('/posts/{id}')
+@app.put('/posts/{id}',response_model=schemas.Post)
 def update_post(id:int,updated_post:schemas.PostCreate,db:Session = Depends(get_db)):
     # cursor.execute("""UPDATE post SET title=%s,content=%s,published=%s WHERE id = %sRETURNING *""",
     # (post.title,post.content,post.published,str(id)))
@@ -114,4 +114,4 @@ def update_post(id:int,updated_post:schemas.PostCreate,db:Session = Depends(get_
    
     post_query.update(updated_post.dict(),synchronize_session=False)
     db.commit()
-    return {"data":post_query.first( )}
+    return post_query.first( ) 
