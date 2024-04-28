@@ -1,13 +1,15 @@
 from fastapi import FastAPI,Response,status,HTTPException,Depends
 from fastapi.params import Body
 import time
+from passlib.context import CryptContext
 from typing import Optional,List
 from sqlalchemy.orm  import Session
 from random import randrange
 import psycopg2
 from psycopg2.extras import RealDictCursor   #importing because after running the query it should give the name of column
-from . import models,schemas
+from . import models,schemas,utils
 from .database import engine,get_db
+
 
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
@@ -115,3 +117,16 @@ def update_post(id:int,updated_post:schemas.PostCreate,db:Session = Depends(get_
     post_query.update(updated_post.dict(),synchronize_session=False)
     db.commit()
     return post_query.first( ) 
+
+
+@app.post('/users',status_code=status.HTTP_201_CREATED,response_model=schemas.UserOut)
+def create_user(user:schemas.UserCreate,db:Session=Depends(get_db)):
+    #hash the password it is in user.password
+    hashed_password = utils.hash(user.password)
+    user.password = hashed_password
+    new_user = models.User(**user.dict())
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)  # this is doing the returning work that is been done in above query
+    return new_user
+
