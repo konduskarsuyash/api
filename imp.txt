@@ -31,3 +31,17 @@ class Post(BaseModel):
 so what they do is checks whether the user inputs the correct field in it so and then they send back to it 
 
 In Sqlalchemy model we update create all the operationsare done in python alone so that we don;t worry about the sql queries
+
+
+Jwt token authentication 
+
+it is stateless means that there is nothing in our databaseor api tracks whether user has logged in or logged out that is the power of jwt token it is not stored in backend or api 
+it is stored in frontend on client and it keeps track of whether a user logged in or not
+
+
+working 
+when user logs in with email and pass and if credentials are valid then JWT token is generated
+and the token is return back to user so when the next time user wants to let;s say post then /posts then he also gives the token
+after that again validation is done then after that data is passed
+
+ss is there in the ss folder check there

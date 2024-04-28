@@ -7,7 +7,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor   #importing because after running the query it should give the name of column
 from . import models,schemas,utils
 from .database import engine,get_db
-from .routers import post,user
+from .routers import post, user
 
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
@@ -38,8 +38,8 @@ def find_index_post(id):
         if  p['id'] ==  id:
             return i
         
-app.include_router(post.router)
 app.include_router(user.router)
+app.include_router(post.router)
 # so basically what is happening here is whenever we had http request after getting here it checks it line by line after getting into above line then it goes to post router and checks for a match
 @app.get("/")
 def root():
