@@ -10,17 +10,7 @@ class PostBase(BaseModel):
     
 class PostCreate(PostBase):
     pass
- 
-class Post(PostBase):
-    id:int
-    created_at:datetime
-    
-    class Config:
-        orm_mode=True   
-        
-class UserCreate(BaseModel):
-    email:EmailStr   #EmailStr validates that it is valid email
-    password:str
+
 
 class UserOut(BaseModel):  #it gives you sqlAlchmey model but we have to change back to pydantice model so for that we use orm_mode=True
     id:int
@@ -29,6 +19,20 @@ class UserOut(BaseModel):  #it gives you sqlAlchmey model but we have to change 
     
     class Config:
         orm_mode=True   
+ 
+class Post(PostBase):
+    id:int
+    created_at:datetime
+    owner_id:int
+    owner:UserOut
+    
+    class Config:
+        orm_mode=True   
+        
+class UserCreate(BaseModel):
+    email:EmailStr   #EmailStr validates that it is valid email
+    password:str
+
         
         
 class UserLogin(BaseModel):
