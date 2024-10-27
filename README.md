@@ -55,10 +55,10 @@ This Blog Post API enables users to create, read, update, and delete blog posts 
 
 ## Usage
 
-- **Register/Login**: Use the `/auth/register` endpoint to create a user account and `/auth/login` to log in and receive a JWT token.
+- **Register/Login**: Use the `/register` endpoint to create a user account and `/login` to log in and receive a JWT token.
 - **Create Posts**: Create blog posts using the `/posts` endpoint, accessible to authenticated users.
 - **View, Update, Delete Posts**: Perform CRUD operations on posts with endpoints `/posts/{post_id}`, ensuring secure access.
-- **Like Posts**: Like posts by sending requests to `/posts/{post_id}/like`.
+- **Like Posts**: Like posts by sending requests to `/posts/{post_id}/`.
 
 ## Deployment
 
