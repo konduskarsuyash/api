@@ -22,11 +22,11 @@ This Blog Post API enables users to create, read, update, and delete blog posts 
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/blog_post_api.git
+    git clone https://github.com/konduskarsuyash/api.git
     ```
 2. **Navigate to the project directory**:
     ```bash
-    cd blog_post_api
+    cd api
     ```
 3. **Create a virtual environment**:
     ```bash
@@ -66,4 +66,4 @@ The API is live and can be accessed at: [https://api-9leq.onrender.com](https://
 
 ## Contact
 
-For any inquiries, please contact yourname@example.com or open an issue in the repository.
+For any inquiries, please contact suyashkonduskar27@gmail.com or open an issue in the repository.
