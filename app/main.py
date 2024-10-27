@@ -31,7 +31,7 @@ app.include_router(vote.router)
 # so basically what is happening here is whenever we had http request after getting here it checks it line by line after getting into above line then it goes to post router and checks for a match
 @app.get("/")
 def root():
-    return {"message": "i will start the backend now"}
+    return {"message": "hello world"}
 
 
  
