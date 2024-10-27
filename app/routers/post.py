@@ -3,6 +3,8 @@ from typing import List,Optional
 from fastapi import FastAPI,Response,status,HTTPException,Depends,APIRouter
 from sqlalchemy.orm  import Session
 from ..database import get_db
+from sqlalchemy import func
+from fastapi.encoders import jsonable_encoder
 
 
 router = APIRouter(
@@ -10,6 +12,7 @@ router = APIRouter(
     tags=['Posts']   # this is just for simplicity for the localhost:8000/docs where yiu will have a good ui
 )
 
+# @router.get("/", response_model=List[schemas.Post])
 @router.get("/", response_model=List[schemas.Post])
 def posts(db:Session = Depends(get_db),limit:int=10,skip:int=0,search:Optional[str]=""):
     
@@ -18,6 +21,8 @@ def posts(db:Session = Depends(get_db),limit:int=10,skip:int=0,search:Optional[s
  
     posts =  db.query(models.Post).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all() 
     return posts
+
+
 
 
 
